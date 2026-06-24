@@ -1,516 +1,518 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SourceTech — Coming Soon</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-  --bg:        #050B18;
-  --surface:   rgba(255,255,255,0.04);
-  --border:    rgba(255,255,255,0.08);
-  --indigo:    #6366F1;
-  --cyan:      #22D3EE;
-  --purple:    #A855F7;
-  --text:      #E0F2FE;
-  --muted:     #64748B;
-  --card-bg:   rgba(10,20,45,0.6);
-}
-
-html, body { height: 100%; }
-
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  overflow: hidden;
-}
-
-/* ─── Canvas ─── */
-canvas {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ─── Ambient blobs ─── */
-.blobs {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
-}
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.18;
-  animation: drift 18s ease-in-out infinite alternate;
-}
-.blob-1 {
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, #6366F1, transparent 70%);
-  top: -15%; left: -10%;
-  animation-duration: 22s;
-}
-.blob-2 {
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, #22D3EE, transparent 70%);
-  bottom: -15%; right: -10%;
-  animation-duration: 18s;
-  animation-delay: -8s;
-}
-.blob-3 {
-  width: 350px; height: 350px;
-  background: radial-gradient(circle, #A855F7, transparent 70%);
-  top: 40%; left: 50%;
-  transform: translate(-50%, -50%);
-  animation-duration: 26s;
-  animation-delay: -4s;
-}
-@keyframes drift {
-  0%   { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(40px, 30px) scale(1.08); }
-}
-
-/* ─── Main card ─── */
-.card {
-  position: relative;
-  z-index: 10;
-  max-width: 740px;
-  width: 90%;
-  padding: 64px 56px 52px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 28px;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  text-align: center;
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.04) inset,
-    0 40px 80px rgba(0,0,0,0.6),
-    0 0 120px rgba(99,102,241,0.12);
-  animation: fadeUp 1s cubic-bezier(.16,1,.3,1) forwards;
-  opacity: 0;
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(32px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ─── Logo mark ─── */
-.logo-wrap {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 32px;
-  animation: fadeUp 1s .15s cubic-bezier(.16,1,.3,1) both;
-}
-.logomark {
-  position: relative;
-  width: 52px; height: 52px;
-  flex-shrink: 0;
-}
-.logomark svg {
-  width: 100%; height: 100%;
-}
-.logomark img {
-  width: 100%; height: 100%;
-  object-fit: contain;
-}
-.orbit {
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  border: 1px solid rgba(99,102,241,0.35);
-  animation: spin 8s linear infinite;
-}
-.orbit::after {
-  content: '';
-  position: absolute;
-  top: -3px; left: 50%;
-  transform: translateX(-50%);
-  width: 6px; height: 6px;
-  background: var(--indigo);
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--indigo);
-}
-.orbit-2 {
-  inset: -16px;
-  border-color: rgba(34,211,238,0.2);
-  animation: spin 14s linear infinite reverse;
-}
-.orbit-2::after {
-  background: var(--cyan);
-  box-shadow: 0 0 10px var(--cyan);
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.logo-text {
-  font-family: 'Syne', sans-serif;
-  font-size: 36px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  line-height: 1;
-}
-.logo-text span { color: var(--cyan); }
-
-/* ─── Badge ─── */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 16px;
-  background: rgba(99,102,241,0.12);
-  border: 1px solid rgba(99,102,241,0.3);
-  border-radius: 100px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #A5B4FC;
-  margin-bottom: 28px;
-  animation: fadeUp 1s .25s cubic-bezier(.16,1,.3,1) both;
-}
-.badge-dot {
-  width: 6px; height: 6px;
-  background: var(--cyan);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--cyan);
-  animation: pulse 2s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: .5; transform: scale(0.7); }
-}
-
-/* ─── Headline ─── */
-.headline {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(32px, 5vw, 52px);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -1px;
-  margin-bottom: 20px;
-  animation: fadeUp 1s .35s cubic-bezier(.16,1,.3,1) both;
-}
-.headline .grad {
-  background: linear-gradient(120deg, var(--indigo), var(--cyan), var(--purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ─── Body ─── */
-.body-text {
-  font-size: 16px;
-  font-weight: 400;
-  color: #94A3B8;
-  line-height: 1.75;
-  max-width: 520px;
-  margin: 0 auto 36px;
-  animation: fadeUp 1s .45s cubic-bezier(.16,1,.3,1) both;
-}
-
-/* ─── Pills ─── */
-.pills {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 40px;
-  animation: fadeUp 1s .5s cubic-bezier(.16,1,.3,1) both;
-}
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  font-size: 13px;
-  color: #94A3B8;
-}
-.pill-icon { font-size: 14px; }
-
-/* ─── CTA ─── */
-.cta-wrap {
-  display: flex;
-  gap: 14px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 48px;
-  animation: fadeUp 1s .6s cubic-bezier(.16,1,.3,1) both;
-}
-.btn-primary {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 30px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, var(--indigo), #4F46E5);
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none;
-  letter-spacing: 0.01em;
-  transition: transform 0.25s, box-shadow 0.25s;
-  box-shadow: 0 4px 24px rgba(99,102,241,0.35), 0 0 0 1px rgba(255,255,255,0.08) inset;
-  overflow: hidden;
-}
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%);
-  pointer-events: none;
-}
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(99,102,241,0.5); }
-
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 24px;
-  border-radius: 14px;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: #94A3B8;
-  font-family: 'Inter', sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: border-color 0.2s, color 0.2s, transform 0.2s;
-}
-.btn-ghost:hover { border-color: rgba(255,255,255,0.2); color: var(--text); transform: translateY(-2px); }
-
-/* ─── Divider ─── */
-.divider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin-bottom: 28px;
-}
-
-/* ─── Footer ─── */
-.footer-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  animation: fadeUp 1s .7s cubic-bezier(.16,1,.3,1) both;
-}
-.footer-copy {
-  font-size: 13px;
-  color: var(--muted);
-}
-.socials {
-  display: flex;
-  gap: 10px;
-}
-.social-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px; height: 34px;
-  border-radius: 8px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 15px;
-  transition: color 0.2s, border-color 0.2s, transform 0.2s;
-}
-.social-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
-
-/* ─── Responsive ─── */
-@media (max-width: 600px) {
-  .card { padding: 44px 28px 38px; }
-  .footer-row { justify-content: center; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .orbit, .orbit-2, .blob { animation: none; }
-}
-</style>
-</head>
-<body>
-
-<canvas id="c"></canvas>
-<div class="blobs">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
-</div>
-
-<div class="card">
-
-  <!-- Logo -->
-  <div class="logo-wrap">
-    <div class="logomark">
-      <div class="orbit orbit-2"></div>
-      <div class="orbit"></div>
-      <img src="logo.png" alt="SourceTech Logo" />
-    </div>
-    <div class="logo-text">Source<span>Tech</span></div>
-  </div>
-
-  <!-- Badge -->
-  <div class="badge">
-    <span class="badge-dot"></span>
-    Under Development
-  </div>
-
-  <!-- Headline -->
-  <h1 class="headline">
-    Building the <span class="grad">Digital Future</span><br>of Bangladesh
-  </h1>
-
-  <!-- Body -->
-  <p class="body-text">
-    We craft websites, software, and mobile experiences that don't just function — they perform. Our official launch is on the way.
-  </p>
-
-
-  <!-- CTA -->
-  <div class="cta-wrap">
-    <a href="mailto:hello@sourcetech.bd" class="btn-primary">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-      Get in Touch
-    </a>
-    <a href="#" class="btn-ghost">
-      Learn More
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- Footer row -->
-  <div class="footer-row">
-    <span class="footer-copy">© 2026 SourceTech. All rights reserved.</span>
-    <div class="socials">
-      <!-- LinkedIn -->
-      <a href="#" class="social-btn" title="LinkedIn">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-      </a>
-      <!-- Twitter/X -->
-      <a href="#" class="social-btn" title="X / Twitter">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      </a>
-      <!-- GitHub -->
-      <a href="#" class="social-btn" title="GitHub">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-      </a>
-    </div>
-  </div>
-
-</div>
-
-<script>
-/* ─── Particle mesh canvas ─── */
-(function() {
-  const canvas = document.getElementById('c');
-  const ctx    = canvas.getContext('2d');
-  let W, H, particles, mouse = { x: -9999, y: -9999 };
-  const COUNT = 80, CONNECT_DIST = 130, MOUSE_DIST = 160;
-
-  function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-    init();
-  }
-
-  function rand(a, b) { return Math.random() * (b - a) + a; }
-
-  function init() {
-    particles = Array.from({ length: COUNT }, () => ({
-      x:  rand(0, W), y:  rand(0, H),
-      vx: rand(-0.25, 0.25), vy: rand(-0.25, 0.25),
-      r:  rand(1, 2.5)
-    }));
-  }
-
-  function dist(a, b) {
-    const dx = a.x - b.x, dy = a.y - b.y;
-    return Math.sqrt(dx * dx + dy * dy);
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-
-    // update
-    particles.forEach(p => {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > W) p.vx *= -1;
-      if (p.y < 0 || p.y > H) p.vy *= -1;
-    });
-
-    // connections
-    for (let i = 0; i < particles.length; i++) {
-      const a = particles[i];
-      for (let j = i + 1; j < particles.length; j++) {
-        const b = particles[j];
-        const d = dist(a, b);
-        if (d < CONNECT_DIST) {
-          const alpha = (1 - d / CONNECT_DIST) * 0.4;
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(99,102,241,${alpha})`;
-          ctx.lineWidth = 1;
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SourceTech delivers premium computer hardware, networking infrastructure, IT support, and enterprise technology solutions for modern businesses." />
+  <title>SourceTech | Enterprise Technology Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              green: '#3D9E0A',
+              glow: '#4CAF50',
+              charcoal: '#333333',
+              surface: '#F5F7FA'
+            }
+          },
+          boxShadow: {
+            glow: '0 18px 50px rgba(62,158,10,0.17)',
+            soft: '0 18px 45px rgba(17,24,39,0.08)'
+          }
         }
       }
-      // mouse proximity lines
-      const dm = dist(a, mouse);
-      if (dm < MOUSE_DIST) {
-        const alpha = (1 - dm / MOUSE_DIST) * 0.6;
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(34,211,238,${alpha})`;
-        ctx.lineWidth = 1;
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(mouse.x, mouse.y);
-        ctx.stroke();
-      }
+    };
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
     }
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, rgba(77,158,10,0.17), transparent 24%),
+                  linear-gradient(180deg, #111827 0%, #0f172a 100%);
+      color: #f8fafc;
+    }
+    .glass-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .logo-mark {
+      width: 10.5rem;
+      height: 6.5rem;
+      display: grid;
+      place-items: center;
+    }
+    .logo-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .grid-bg {
+      background-image: radial-gradient(circle, rgba(255,255,255,0.04) 0.5px, transparent 0.5px),
+                        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 30px 30px, 30px 30px, 30px 30px;
+      background-position: 0 0, 0 0, 0 0;
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .wave {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 38%);
+      pointer-events: none;
+      filter: blur(30px);
+      opacity: 0.75;
+    }
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: #020617;
+      z-index: 50;
+      transition: opacity 0.4s ease;
+    }
+    .loading-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .whatsapp-fab {
+      width: 3.1rem;
+      height: 3.1rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #3D9E0A, #4CAF50);
+      box-shadow: 0 16px 45px rgba(61,158,10,0.28);
+    }
+  </style>
+</head>
+<body class="relative overflow-x-hidden">
+  <div class="loading-screen" id="loadingScreen">
+    <div class="flex flex-col items-center gap-4 text-center text-white">
+      <div class="h-16 w-16 rounded-full border-4 border-white/30 border-t-brand-green animate-spin"></div>
+      <div class="max-w-xs text-sm text-slate-300">Preparing the SourceTech enterprise experience...</div>
+    </div>
+  </div>
+  <div class="absolute inset-0 opacity-40">
+    <div class="wave"></div>
+  </div>
+  <header class="relative z-20 border-b border-white/10 bg-slate-950/50 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-5 lg:px-8">
+      <a href="#home" class="flex items-center text-white no-underline">
+        <div class="logo-mark"><img src="sourcetech.png" alt="SourceTech logo" /></div>
+      </a>
+      <nav class="hidden items-center gap-8 text-sm font-medium text-slate-200 lg:flex">
+        <a href="#about" class="transition hover:text-white">About</a>
+        <a href="#services" class="transition hover:text-white">Services</a>
+        <a href="#why" class="transition hover:text-white">Why Us</a>
+        <a href="#brands" class="transition hover:text-white">Brands</a>
+        <a href="#contact" class="transition hover:text-white">Contact</a>
+      </nav>
+      <button id="mobileNavToggle" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-100 transition hover:border-brand-green/70 hover:bg-brand-green/10 lg:hidden" aria-label="Open mobile menu">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="rounded-full bg-brand-green px-4 py-2 text-sm font-semibold text-white shadow-glow transition hover:bg-[#36a20b]">Get a Quote</a>
+        <button class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-100 transition hover:border-brand-green/80 hover:text-white" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Us</button>
+      </div>
+    </div>
+  </header>
+  <div id="mobileNav" class="fixed inset-x-0 top-0 z-30 hidden border-b border-white/10 bg-slate-950/95 p-4 backdrop-blur-xl lg:hidden">
+    <div class="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-slate-900/90 p-6 shadow-soft">
+      <div class="flex items-center justify-between">
+        <span class="text-sm font-semibold uppercase tracking-[0.24em] text-brand-green">Menu</span>
+        <button id="mobileNavClose" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-100 transition hover:border-brand-green/70 hover:bg-brand-green/10" aria-label="Close mobile menu">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M6 18L18 6"/></svg>
+        </button>
+      </div>
+      <nav class="mt-6 grid gap-4 text-base font-medium text-slate-100">
+        <a href="#about" class="rounded-2xl px-4 py-3 transition hover:bg-brand-green/10">About</a>
+        <a href="#services" class="rounded-2xl px-4 py-3 transition hover:bg-brand-green/10">Services</a>
+        <a href="#why" class="rounded-2xl px-4 py-3 transition hover:bg-brand-green/10">Why Us</a>
+        <a href="#brands" class="rounded-2xl px-4 py-3 transition hover:bg-brand-green/10">Brands</a>
+        <a href="#contact" class="rounded-2xl px-4 py-3 transition hover:bg-brand-green/10">Contact</a>
+      </nav>
+    </div>
+  </div>
 
-    // dots
-    particles.forEach(p => {
-      const dm = dist(p, mouse);
-      const lit = dm < MOUSE_DIST;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, lit ? p.r * 1.6 : p.r, 0, Math.PI * 2);
-      ctx.fillStyle = lit ? 'rgba(34,211,238,0.7)' : 'rgba(99,102,241,0.5)';
-      ctx.fill();
+  <main id="home" class="relative z-10 overflow-hidden">
+    <section class="relative overflow-hidden px-6 pt-16 pb-24 lg:px-8">
+      <div class="absolute inset-x-0 top-0 h-96 bg-gradient-to-b from-brand-green/15 via-transparent to-transparent"></div>
+      <div class="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+        <div class="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/70 p-8 shadow-soft lg:p-14 glass-card">
+          <div class="absolute inset-0 bg-grid"></div>
+          <div class="relative z-10 grid gap-6">
+            <div class="max-w-xl">
+              <span class="inline-flex rounded-full bg-brand-green/10 px-3 py-1 text-sm font-semibold uppercase tracking-[0.24em] text-brand-green">Enterprise Technology</span>
+              <h1 class="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">Empowering Businesses Through Reliable Technology Solutions</h1>
+              <p class="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">Professional computer hardware, networking infrastructure, IT support, and enterprise technology services built to power growth, protect assets, and simplify operations.</p>
+            </div>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <a href="#contact" class="inline-flex items-center justify-center rounded-full bg-brand-green px-6 py-3 text-sm font-semibold text-white transition hover:scale-[1.02] hover:bg-[#36a20b]">Get a Quote</a>
+              <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-slate-100 transition hover:border-brand-green/80 hover:text-white">Contact Us</a>
+            </div>
+            <div class="grid gap-4 sm:grid-cols-3">
+              <div class="rounded-3xl border border-white/10 bg-white/5 px-4 py-5 text-center">
+                <p class="text-sm uppercase tracking-[0.22em] text-slate-400">Hardware</p>
+                <p class="mt-3 text-2xl font-semibold text-white">Premium OEM</p>
+              </div>
+              <div class="rounded-3xl border border-white/10 bg-white/5 px-4 py-5 text-center">
+                <p class="text-sm uppercase tracking-[0.22em] text-slate-400">Support</p>
+                <p class="mt-3 text-2xl font-semibold text-white">24/7 Availability</p>
+              </div>
+              <div class="rounded-3xl border border-white/10 bg-white/5 px-4 py-5 text-center">
+                <p class="text-sm uppercase tracking-[0.22em] text-slate-400">Delivery</p>
+                <p class="mt-3 text-2xl font-semibold text-white">Fast & secure</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/80 p-8 shadow-soft glass-card">
+            <div class="absolute -right-12 top-14 h-40 w-40 rounded-full bg-brand-glow/20 blur-3xl"></div>
+            <div class="relative z-10">
+              <span class="text-sm uppercase tracking-[0.3em] text-brand-green">Trusted by enterprises</span>
+              <h2 class="mt-4 text-3xl font-semibold text-white">Modern IT infrastructure engineered for scale.</h2>
+              <p class="mt-4 text-slate-300">We help mid-market and enterprise teams deploy systems with security, performance and long-term reliability in mind.</p>
+            </div>
+          </div>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div class="rounded-[1.75rem] border border-white/10 bg-slate-950/80 p-6 glass-card transition hover:-translate-y-1 hover:border-brand-green/20">
+              <p class="text-sm uppercase tracking-[0.24em] text-brand-green">Featured</p>
+              <h3 class="mt-3 text-xl font-semibold text-white">Network resilience</h3>
+              <p class="mt-3 text-slate-300">Design and deploy robust wired and wireless networks for offices, data centers and campus environments.</p>
+            </div>
+            <div class="rounded-[1.75rem] border border-white/10 bg-slate-950/80 p-6 glass-card transition hover:-translate-y-1 hover:border-brand-green/20">
+              <p class="text-sm uppercase tracking-[0.24em] text-brand-green">Benchmark</p>
+              <h3 class="mt-3 text-xl font-semibold text-white">Hardware consolidation</h3>
+              <p class="mt-3 text-slate-300">Optimize server, storage and endpoint investments with proven enterprise-grade systems.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="relative px-6 py-24 lg:px-8">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 text-center">
+          <span class="inline-flex rounded-full bg-brand-green/10 px-3 py-1 text-sm font-semibold uppercase tracking-[0.28em] text-brand-green">About SourceTech</span>
+          <h2 class="mt-5 text-3xl font-semibold text-white sm:text-4xl">Professional technology services for modern enterprises.</h2>
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-300">SourceTech delivers premium computer hardware, networking solutions, and business-critical IT infrastructure with transparency, responsiveness, and corporate quality.</p>
+        </div>
+        <div class="grid gap-6 lg:grid-cols-3">
+          <article class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft reveal">
+            <span class="inline-flex rounded-full bg-brand-green/10 px-3 py-1 text-sm font-semibold uppercase tracking-[0.28em] text-brand-green">Mission</span>
+            <h3 class="mt-5 text-xl font-semibold text-white">Deliver reliable technology with speed and integrity.</h3>
+            <p class="mt-4 text-slate-300">We support organizations with trusted products, proactive engineering and service-first partnerships to keep business systems running smoothly.</p>
+          </article>
+          <article class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft reveal delay-100">
+            <span class="inline-flex rounded-full bg-brand-green/10 px-3 py-1 text-sm font-semibold uppercase tracking-[0.28em] text-brand-green">Vision</span>
+            <h3 class="mt-5 text-xl font-semibold text-white">Be the technology partner businesses depend on.</h3>
+            <p class="mt-4 text-slate-300">We envision a future where every enterprise can access optimized infrastructure, modern hardware and expert support without compromise.</p>
+          </article>
+          <article class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft reveal delay-200">
+            <span class="inline-flex rounded-full bg-brand-green/10 px-3 py-1 text-sm font-semibold uppercase tracking-[0.28em] text-brand-green">Approach</span>
+            <h3 class="mt-5 text-xl font-semibold text-white">Strategic, transparent and scalable.</h3>
+            <p class="mt-4 text-slate-300">From planning to deployment, our projects are built on accountability, clear communication, and measurable business outcomes.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="px-6 pb-24 lg:px-8">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 text-center">
+          <span class="inline-flex rounded-full bg-slate-800/80 px-3 py-1 text-sm font-semibold uppercase tracking-[0.28em] text-slate-200">Services</span>
+          <h2 class="mt-5 text-3xl font-semibold text-white sm:text-4xl">End-to-end enterprise offerings.</h2>
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-300">From endpoints and servers to network architecture and cloud readiness, our services cover the full scope of modern IT.</p>
+        </div>
+        <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft transition hover:-translate-y-1 hover:border-brand-green/20 reveal">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-brand-green/10 text-brand-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6"><path d="M4 6h16v2H4zm0 4h16v2H4zm0 4h12v2H4z"/></svg></div>
+            <h3 class="mt-6 text-xl font-semibold text-white">Computer & Laptop Supply</h3>
+            <p class="mt-3 text-slate-300">High-performance desktops, laptops and workstations sourced from trusted OEM vendors.</p>
+          </div>
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft transition hover:-translate-y-1 hover:border-brand-green/20 reveal delay-100">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-brand-green/10 text-brand-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3 class="mt-6 text-xl font-semibold text-white">Networking Solutions</h3>
+            <p class="mt-3 text-slate-300">Structured cabling, switches, routers, wireless solutions and network security design.</p>
+          </div>
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft transition hover:-translate-y-1 hover:border-brand-green/20 reveal delay-200">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-brand-green/10 text-brand-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6"><path d="M12 4v16m8-8H4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3 class="mt-6 text-xl font-semibold text-white">Hardware Maintenance</h3>
+            <p class="mt-3 text-slate-300">Preventative maintenance, repairs and lifecycle services for servers, workstations and peripherals.</p>
+          </div>
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft transition hover:-translate-y-1 hover:border-brand-green/20 reveal delay-300">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-brand-green/10 text-brand-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6"><path d="M6 4h12v16H6z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3 class="mt-6 text-xl font-semibold text-white">Corporate IT Infrastructure</h3>
+            <p class="mt-3 text-slate-300">Data center architecture, virtualization, backup and enterprise-class infrastructure services.</p>
+          </div>
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft transition hover:-translate-y-1 hover:border-brand-green/20 reveal delay-400">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-brand-green/10 text-brand-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6"><path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3 class="mt-6 text-xl font-semibold text-white">Storage & Backup Systems</h3>
+            <p class="mt-3 text-slate-300">Scalable storage, SAN/NAS solutions and reliable backup systems for critical data protection.</p>
+          </div>
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft transition hover:-translate-y-1 hover:border-brand-green/20 reveal delay-500">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-brand-green/10 text-brand-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6"><path d="M8 6h8v4H8zM8 14h8v4H8z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3 class="mt-6 text-xl font-semibold text-white">Cloud & Digital Solutions</h3>
+            <p class="mt-3 text-slate-300">Cloud enablement, managed services and digital transformation designed for secure growth.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="why" class="px-6 py-24 lg:px-8">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 text-center">
+          <span class="inline-flex rounded-full bg-brand-green/10 px-3 py-1 text-sm font-semibold uppercase tracking-[0.28em] text-brand-green">Why Choose Us</span>
+          <h2 class="mt-5 text-3xl font-semibold text-white sm:text-4xl">A trusted partner for technology-led enterprises.</h2>
+        </div>
+        <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft reveal">
+            <h3 class="text-xl font-semibold text-white">Genuine Products</h3>
+            <p class="mt-4 text-slate-300">We supply authentic hardware from leading manufacturers with full warranty support.</p>
+          </div>
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft reveal delay-100">
+            <h3 class="text-xl font-semibold text-white">Professional Support</h3>
+            <p class="mt-4 text-slate-300">Technical teams with enterprise experience provide planning, implementation and service.</p>
+          </div>
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft reveal delay-200">
+            <h3 class="text-xl font-semibold text-white">Business-Focused Solutions</h3>
+            <p class="mt-4 text-slate-300">Every solution is built around your business goals, security and growth requirements.</p>
+          </div>
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft reveal delay-300">
+            <h3 class="text-xl font-semibold text-white">Fast Delivery</h3>
+            <p class="mt-4 text-slate-300">Streamlined logistics and local distribution keep projects on schedule.</p>
+          </div>
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft reveal delay-400">
+            <h3 class="text-xl font-semibold text-white">Competitive Pricing</h3>
+            <p class="mt-4 text-slate-300">Market-leading hardware and support packages with strong cost efficiency.</p>
+          </div>
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 shadow-soft reveal delay-500">
+            <h3 class="text-xl font-semibold text-white">Experienced Team</h3>
+            <p class="mt-4 text-slate-300">Seasoned consultants and engineers deliver practical, scalable technology solutions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="brands" class="px-6 pb-24 lg:px-8">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 text-center">
+          <span class="inline-flex rounded-full bg-slate-800/80 px-3 py-1 text-sm font-semibold uppercase tracking-[0.28em] text-slate-200">Technology Partners</span>
+          <h2 class="mt-5 text-3xl font-semibold text-white sm:text-4xl">Trusted technology brands we represent.</h2>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8">
+          <div class="glass-card flex items-center justify-center rounded-3xl border border-white/10 bg-slate-900/70 p-5 text-slate-300 shadow-soft reveal">HP</div>
+          <div class="glass-card flex items-center justify-center rounded-3xl border border-white/10 bg-slate-900/70 p-5 text-slate-300 shadow-soft reveal delay-100">Dell</div>
+          <div class="glass-card flex items-center justify-center rounded-3xl border border-white/10 bg-slate-900/70 p-5 text-slate-300 shadow-soft reveal delay-200">Lenovo</div>
+          <div class="glass-card flex items-center justify-center rounded-3xl border border-white/10 bg-slate-900/70 p-5 text-slate-300 shadow-soft reveal delay-300">Cisco</div>
+          <div class="glass-card flex items-center justify-center rounded-3xl border border-white/10 bg-slate-900/70 p-5 text-slate-300 shadow-soft reveal delay-400">Mikrotik</div>
+          <div class="glass-card flex items-center justify-center rounded-3xl border border-white/10 bg-slate-900/70 p-5 text-slate-300 shadow-soft reveal delay-500">ASUS</div>
+          <div class="glass-card flex items-center justify-center rounded-3xl border border-white/10 bg-slate-900/70 p-5 text-slate-300 shadow-soft reveal delay-600">Intel</div>
+          <div class="glass-card flex items-center justify-center rounded-3xl border border-white/10 bg-slate-900/70 p-5 text-slate-300 shadow-soft reveal delay-700">AMD</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 pb-24 lg:px-8">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 text-center">
+          <span class="inline-flex rounded-full bg-brand-green/10 px-3 py-1 text-sm font-semibold uppercase tracking-[0.28em] text-brand-green">Performance</span>
+          <h2 class="mt-5 text-3xl font-semibold text-white sm:text-4xl">Trusted outcomes for business technology investments.</h2>
+        </div>
+        <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 text-center shadow-soft reveal">
+            <p class="text-5xl font-semibold text-white"><span data-target="320" class="counter">0</span>+</p>
+            <p class="mt-4 text-slate-300">Projects Completed</p>
+          </div>
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 text-center shadow-soft reveal delay-100">
+            <p class="text-5xl font-semibold text-white"><span data-target="210" class="counter">0</span>+</p>
+            <p class="mt-4 text-slate-300">Happy Clients</p>
+          </div>
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 text-center shadow-soft reveal delay-200">
+            <p class="text-5xl font-semibold text-white"><span data-target="1500" class="counter">0</span>+</p>
+            <p class="mt-4 text-slate-300">Hardware Delivered</p>
+          </div>
+          <div class="glass-card rounded-[2rem] border border-white/10 p-8 text-center shadow-soft reveal delay-300">
+            <p class="text-5xl font-semibold text-white"><span data-target="12" class="counter">0</span>+</p>
+            <p class="mt-4 text-slate-300">Years of Experience</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="relative px-6 pb-28 lg:px-8">
+      <div class="mx-auto max-w-7xl">
+        <div class="grid gap-10 lg:grid-cols-[1fr_0.92fr]">
+          <div class="glass-card rounded-[2rem] border border-white/10 bg-slate-950/75 p-10 shadow-soft reveal">
+            <span class="inline-flex rounded-full bg-brand-green/10 px-3 py-1 text-sm font-semibold uppercase tracking-[0.28em] text-brand-green">Connect</span>
+            <h2 class="mt-5 text-3xl font-semibold text-white">Start your enterprise project with SourceTech.</h2>
+            <p class="mt-4 text-slate-300">Reach out for tailored solutions, hardware procurement, managed services or infrastructure planning.</p>
+            <div class="mt-10 space-y-6 text-slate-300">
+              <div>
+                <p class="text-sm uppercase tracking-[0.2em] text-slate-400">Email</p>
+                <p class="mt-2 text-base text-white"><a href="mailto:hello@sourcetech.bd" class="text-brand-green hover:text-[#36a20b]">hello@sourcetech.bd</a></p>
+              </div>
+              <div>
+                <p class="text-sm uppercase tracking-[0.2em] text-slate-400">Sales</p>
+                <p class="mt-2 text-base text-white"><a href="mailto:sales@sourcetech.bd" class="text-brand-green hover:text-[#36a20b]">sales@sourcetech.bd</a></p>
+              </div>
+              <div>
+                <p class="text-sm uppercase tracking-[0.2em] text-slate-400">Support</p>
+                <p class="mt-2 text-base text-white"><a href="mailto:support@sourcetech.bd" class="text-brand-green hover:text-[#36a20b]">support@sourcetech.bd</a></p>
+              </div>
+              <div>
+                <p class="text-sm uppercase tracking-[0.2em] text-slate-400">Address</p>
+                <p class="mt-2 text-base text-white">Dhaka, Bangladesh</p>
+              </div>
+            </div>
+          </div>
+
+          <form class="glass-card rounded-[2rem] border border-white/10 bg-slate-950/75 p-10 shadow-soft reveal delay-100" onsubmit="event.preventDefault(); document.getElementById('submitMessage').classList.remove('hidden');">
+            <div class="grid gap-6">
+              <div>
+                <label class="mb-2 block text-sm font-medium text-slate-200" for="name">Full Name</label>
+                <input id="name" type="text" required class="w-full rounded-3xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-brand-green/80 focus:ring-2 focus:ring-brand-green/10" placeholder="Your name" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-medium text-slate-200" for="company">Company</label>
+                <input id="company" type="text" class="w-full rounded-3xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-brand-green/80 focus:ring-2 focus:ring-brand-green/10" placeholder="Company name" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-medium text-slate-200" for="email">Email</label>
+                <input id="email" type="email" required class="w-full rounded-3xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-brand-green/80 focus:ring-2 focus:ring-brand-green/10" placeholder="name@company.com" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-medium text-slate-200" for="message">Project Brief</label>
+                <textarea id="message" rows="5" class="w-full rounded-3xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-brand-green/80 focus:ring-2 focus:ring-brand-green/10" placeholder="Tell us about your technology requirements"></textarea>
+              </div>
+              <button type="submit" class="inline-flex items-center justify-center rounded-full bg-brand-green px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#36a20b]">Send message</button>
+              <p id="submitMessage" class="hidden rounded-3xl border border-brand-green/20 bg-brand-green/5 p-4 text-sm text-brand-green">Thank you! We will contact you shortly.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <a href="https://wa.me/8801234567890" target="_blank" rel="noreferrer" class="whatsapp-fab fixed bottom-6 right-6 z-30 inline-flex items-center justify-center text-white shadow-lg transition hover:scale-105" aria-label="WhatsApp Contact">
+    <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 7.5c.6 1.1.75 2.45.35 3.8-.3 1.05-1.05 1.97-2 2.4l-.15.05c-.45.15-.85.05-1.2-.2l-.65-.5c-.2-.15-.45-.2-.7-.1-.4.15-.8.25-1.2.3-.35.05-.7.05-1.05.05-1.1 0-2.05-.6-2.55-1.5-.4-.7-.45-1.5-.15-2.2.3-.8.9-1.5 1.75-1.8.5-.2 1.05-.25 1.55-.15.3.05.55-.1.7-.35l.45-.55c.2-.25.1-.6-.2-.75-1.2-.6-2.2-1.5-2.9-2.65-.25-.4-.3-.95-.1-1.4.45-1.25 1.4-2.2 2.65-2.6.85-.25 1.75-.25 2.55.05 1.35.5 2.45 1.6 2.85 2.95Z"/><path d="m15.5 16.5 1.5 1.5"/></svg>
+  </a>
+
+  <footer class="border-t border-white/10 bg-slate-950/80 px-6 py-12 text-slate-300 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="grid gap-10 lg:grid-cols-[1.2fr_0.9fr_0.9fr]">
+        <div>
+          <a href="#home" class="flex items-center text-white no-underline">
+            <div class="logo-mark"><img src="sourcetech.png" alt="SourceTech logo" /></div>
+          </a>
+          <p class="mt-5 max-w-md text-sm leading-7 text-slate-400">SourceTech is a corporate technology partner delivering hardware, infrastructure and IT services that keep businesses agile and secure.</p>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Quick links</h3>
+          <ul class="mt-6 space-y-3 text-sm leading-7 text-slate-300">
+            <li><a href="#about" class="transition hover:text-white">About</a></li>
+            <li><a href="#services" class="transition hover:text-white">Services</a></li>
+            <li><a href="#brands" class="transition hover:text-white">Partners</a></li>
+            <li><a href="#contact" class="transition hover:text-white">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Social</h3>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="#" class="inline-flex h-10 w-10 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-slate-200 transition hover:border-brand-green/30 hover:bg-brand-green/10">LI</a>
+            <a href="#" class="inline-flex h-10 w-10 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-slate-200 transition hover:border-brand-green/30 hover:bg-brand-green/10">TW</a>
+            <a href="#" class="inline-flex h-10 w-10 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-slate-200 transition hover:border-brand-green/30 hover:bg-brand-green/10">GH</a>
+          </div>
+        </div>
+      </div>
+      <div class="mt-12 border-t border-white/10 pt-8 text-xs text-slate-500">© 2026 SourceTech Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loadingScreen');
+      setTimeout(() => loader.classList.add('hidden'), 600);
     });
 
-    requestAnimationFrame(draw);
-  }
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealElements.forEach(el => revealObserver.observe(el));
 
-  window.addEventListener('resize', resize);
-  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-  window.addEventListener('touchmove', e => {
-    mouse.x = e.touches[0].clientX;
-    mouse.y = e.touches[0].clientY;
-  }, { passive: true });
+    const counters = document.querySelectorAll('.counter');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counter = entry.target;
+          const target = Number(counter.dataset.target);
+          let current = 0;
+          const duration = 1800;
+          const stepTime = Math.max(Math.floor(duration / target), 15);
+          const increment = Math.ceil(target / (duration / stepTime));
+          const interval = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              counter.textContent = target;
+              clearInterval(interval);
+            } else {
+              counter.textContent = current;
+            }
+          }, stepTime);
+          counterObserver.unobserve(counter);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(counter => counterObserver.observe(counter));
 
-  resize();
-  draw();
-})();
-</script>
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileNavToggle = document.getElementById('mobileNavToggle');
+    const mobileNavClose = document.getElementById('mobileNavClose');
+    const mobileLinks = mobileNav.querySelectorAll('a');
+
+    function openMobileNav() {
+      mobileNav.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileNav() {
+      mobileNav.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    mobileNavToggle.addEventListener('click', openMobileNav);
+    mobileNavClose.addEventListener('click', closeMobileNav);
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        closeMobileNav();
+      });
+    });
+  </script>
 </body>
 </html>
