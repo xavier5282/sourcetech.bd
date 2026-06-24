@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SourceTech — Coming Soon</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:        #050B18;
+  --surface:   rgba(255,255,255,0.04);
+  --border:    rgba(255,255,255,0.08);
+  --indigo:    #6366F1;
+  --cyan:      #22D3EE;
+  --purple:    #A855F7;
+  --text:      #E0F2FE;
+  --muted:     #64748B;
+  --card-bg:   rgba(10,20,45,0.6);
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ─── Canvas ─── */
+canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Ambient blobs ─── */
+.blobs {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.18;
+  animation: drift 18s ease-in-out infinite alternate;
+}
+.blob-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, #6366F1, transparent 70%);
+  top: -15%; left: -10%;
+  animation-duration: 22s;
+}
+.blob-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, #22D3EE, transparent 70%);
+  bottom: -15%; right: -10%;
+  animation-duration: 18s;
+  animation-delay: -8s;
+}
+.blob-3 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, #A855F7, transparent 70%);
+  top: 40%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation-duration: 26s;
+  animation-delay: -4s;
+}
+@keyframes drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(40px, 30px) scale(1.08); }
+}
+
+/* ─── Main card ─── */
+.card {
+  position: relative;
+  z-index: 10;
+  max-width: 740px;
+  width: 90%;
+  padding: 64px 56px 52px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  text-align: center;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 40px 80px rgba(0,0,0,0.6),
+    0 0 120px rgba(99,102,241,0.12);
+  animation: fadeUp 1s cubic-bezier(.16,1,.3,1) forwards;
+  opacity: 0;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Logo mark ─── */
+.logo-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+  animation: fadeUp 1s .15s cubic-bezier(.16,1,.3,1) both;
+}
+.logomark {
+  position: relative;
+  width: 52px; height: 52px;
+  flex-shrink: 0;
+}
+.logomark svg {
+  width: 100%; height: 100%;
+}
+.orbit {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid rgba(99,102,241,0.35);
+  animation: spin 8s linear infinite;
+}
+.orbit::after {
+  content: '';
+  position: absolute;
+  top: -3px; left: 50%;
+  transform: translateX(-50%);
+  width: 6px; height: 6px;
+  background: var(--indigo);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--indigo);
+}
+.orbit-2 {
+  inset: -16px;
+  border-color: rgba(34,211,238,0.2);
+  animation: spin 14s linear infinite reverse;
+}
+.orbit-2::after {
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.logo-text {
+  font-family: 'Syne', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.logo-text span { color: var(--cyan); }
+
+/* ─── Badge ─── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #A5B4FC;
+  margin-bottom: 28px;
+  animation: fadeUp 1s .25s cubic-bezier(.16,1,.3,1) both;
+}
+.badge-dot {
+  width: 6px; height: 6px;
+  background: var(--cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--cyan);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: .5; transform: scale(0.7); }
+}
+
+/* ─── Headline ─── */
+.headline {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+  animation: fadeUp 1s .35s cubic-bezier(.16,1,.3,1) both;
+}
+.headline .grad {
+  background: linear-gradient(120deg, var(--indigo), var(--cyan), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Body ─── */
+.body-text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #94A3B8;
+  line-height: 1.75;
+  max-width: 520px;
+  margin: 0 auto 36px;
+  animation: fadeUp 1s .45s cubic-bezier(.16,1,.3,1) both;
+}
+
+/* ─── Pills ─── */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  animation: fadeUp 1s .5s cubic-bezier(.16,1,.3,1) both;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 13px;
+  color: #94A3B8;
+}
+.pill-icon { font-size: 14px; }
+
+/* ─── CTA ─── */
+.cta-wrap {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+  animation: fadeUp 1s .6s cubic-bezier(.16,1,.3,1) both;
+}
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 30px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--indigo), #4F46E5);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 4px 24px rgba(99,102,241,0.35), 0 0 0 1px rgba(255,255,255,0.08) inset;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%);
+  pointer-events: none;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(99,102,241,0.5); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-radius: 14px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: #94A3B8;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.2); color: var(--text); transform: translateY(-2px); }
+
+/* ─── Divider ─── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin-bottom: 28px;
+}
+
+/* ─── Footer ─── */
+.footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  animation: fadeUp 1s .7s cubic-bezier(.16,1,.3,1) both;
+}
+.footer-copy {
+  font-size: 13px;
+  color: var(--muted);
+}
+.socials {
+  display: flex;
+  gap: 10px;
+}
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 15px;
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
+}
+.social-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+  .card { padding: 44px 28px 38px; }
+  .footer-row { justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit, .orbit-2, .blob { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="c"></canvas>
+<div class="blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="card">
+
+  <!-- Logo -->
+  <div class="logo-wrap">
+    <div class="logomark">
+      <div class="orbit orbit-2"></div>
+      <div class="orbit"></div>
+      <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="52" height="52" rx="14" fill="url(#lg)"/>
+        <path d="M16 20h8m-8 6h12m-12 6h8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="36" cy="26" r="5" stroke="#22D3EE" stroke-width="2" fill="none"/>
+        <path d="M36 21v-3M36 34v-3M31 26h-3M44 26h-3" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4F46E5"/>
+            <stop offset="1" stop-color="#1E1B6B"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <div class="logo-text">Source<span>Tech</span></div>
+  </div>
+
+  <!-- Badge -->
+  <div class="badge">
+    <span class="badge-dot"></span>
+    Under Development
+  </div>
+
+  <!-- Headline -->
+  <h1 class="headline">
+    Building the <span class="grad">Digital Future</span><br>of Bangladesh
+  </h1>
+
+  <!-- Body -->
+  <p class="body-text">
+    We craft websites, software, and mobile experiences that don't just function — they perform. Our official launch is on the way.
+  </p>
+
+  <!-- Service pills -->
+  <div class="pills">
+    <span class="pill"><span class="pill-icon">🌐</span> Web Development</span>
+    <span class="pill"><span class="pill-icon">📱</span> Mobile Apps</span>
+    <span class="pill"><span class="pill-icon">⚙️</span> Software Solutions</span>
+    <span class="pill"><span class="pill-icon">☁️</span> Cloud & DevOps</span>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <a href="mailto:hello@sourcetech.bd" class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      Get in Touch
+    </a>
+    <a href="#" class="btn-ghost">
+      Learn More
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Footer row -->
+  <div class="footer-row">
+    <span class="footer-copy">© 2026 SourceTech. All rights reserved.</span>
+    <div class="socials">
+      <!-- LinkedIn -->
+      <a href="#" class="social-btn" title="LinkedIn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+      <!-- Twitter/X -->
+      <a href="#" class="social-btn" title="X / Twitter">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <!-- GitHub -->
+      <a href="#" class="social-btn" title="GitHub">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ─── Particle mesh canvas ─── */
+(function() {
+  const canvas = document.getElementById('c');
+  const ctx    = canvas.getContext('2d');
+  let W, H, particles, mouse = { x: -9999, y: -9999 };
+  const COUNT = 80, CONNECT_DIST = 130, MOUSE_DIST = 160;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    init();
+  }
+
+  function rand(a, b) { return Math.random() * (b - a) + a; }
+
+  function init() {
+    particles = Array.from({ length: COUNT }, () => ({
+      x:  rand(0, W), y:  rand(0, H),
+      vx: rand(-0.25, 0.25), vy: rand(-0.25, 0.25),
+      r:  rand(1, 2.5)
+    }));
+  }
+
+  function dist(a, b) {
+    const dx = a.x - b.x, dy = a.y - b.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // update
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+    });
+
+    // connections
+    for (let i = 0; i < particles.length; i++) {
+      const a = particles[i];
+      for (let j = i + 1; j < particles.length; j++) {
+        const b = particles[j];
+        const d = dist(a, b);
+        if (d < CONNECT_DIST) {
+          const alpha = (1 - d / CONNECT_DIST) * 0.4;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(99,102,241,${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+      // mouse proximity lines
+      const dm = dist(a, mouse);
+      if (dm < MOUSE_DIST) {
+        const alpha = (1 - dm / MOUSE_DIST) * 0.6;
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(34,211,238,${alpha})`;
+        ctx.lineWidth = 1;
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+      }
+    }
+
+    // dots
+    particles.forEach(p => {
+      const dm = dist(p, mouse);
+      const lit = dm < MOUSE_DIST;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, lit ? p.r * 1.6 : p.r, 0, Math.PI * 2);
+      ctx.fillStyle = lit ? 'rgba(34,211,238,0.7)' : 'rgba(99,102,241,0.5)';
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  window.addEventListener('touchmove', e => {
+    mouse.x = e.touches[0].clientX;
+    mouse.y = e.touches[0].clientY;
+  }, { passive: true });
+
+  resize();
+  draw();
+})();
+</script>
+</body>
+</html>
