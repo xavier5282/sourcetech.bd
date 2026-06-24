@@ -123,6 +123,10 @@ canvas {
 .logomark svg {
   width: 100%; height: 100%;
 }
+.logomark img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+}
 .orbit {
   position: absolute;
   inset: -8px;
@@ -359,18 +363,7 @@ canvas {
     <div class="logomark">
       <div class="orbit orbit-2"></div>
       <div class="orbit"></div>
-      <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="52" height="52" rx="14" fill="url(#lg)"/>
-        <path d="M16 20h8m-8 6h12m-12 6h8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
-        <circle cx="36" cy="26" r="5" stroke="#22D3EE" stroke-width="2" fill="none"/>
-        <path d="M36 21v-3M36 34v-3M31 26h-3M44 26h-3" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
-        <defs>
-          <linearGradient id="lg" x1="0" y1="0" x2="52" y2="52" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#4F46E5"/>
-            <stop offset="1" stop-color="#1E1B6B"/>
-          </linearGradient>
-        </defs>
-      </svg>
+      <img src="logo.png" alt="SourceTech Logo" />
     </div>
     <div class="logo-text">Source<span>Tech</span></div>
   </div>
@@ -391,13 +384,6 @@ canvas {
     We craft websites, software, and mobile experiences that don't just function — they perform. Our official launch is on the way.
   </p>
 
-  <!-- Service pills -->
-  <div class="pills">
-    <span class="pill"><span class="pill-icon">🌐</span> Web Development</span>
-    <span class="pill"><span class="pill-icon">📱</span> Mobile Apps</span>
-    <span class="pill"><span class="pill-icon">⚙️</span> Software Solutions</span>
-    <span class="pill"><span class="pill-icon">☁️</span> Cloud & DevOps</span>
-  </div>
 
   <!-- CTA -->
   <div class="cta-wrap">
